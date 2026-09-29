@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: vehicle-service
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: ${VEHICLE_CACHE_TTL:10m}
+      key-prefix: "vehicle-service::"
+      cache-null-values: false
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3307/vehicle_db?createDatabaseIfNotExist=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: ${JPA_FORMAT_SQL:false}
+        dialect: ${JPA_DIALECT:org.hibernate.dialect.MySQLDialect}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+      connect-timeout: ${REDIS_CONNECT_TIMEOUT:2s}
+      timeout: ${REDIS_TIMEOUT:2s}
+
+server:
+  port: ${SERVER_PORT:8081}
+
+eureka:
+  client:
+    register-with-eureka: ${EUREKA_REGISTER_WITH_EUREKA:true}
+    fetch-registry: ${EUREKA_FETCH_REGISTRY:true}
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
